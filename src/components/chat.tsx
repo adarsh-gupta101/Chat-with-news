@@ -5,6 +5,9 @@ import { InputMessage } from "./input-message";
 import { scrollToBottom, initialMessage } from "@/lib/utils";
 import { ChatLine } from "./chat-line";
 import { ChatGPTMessage } from "@/types";
+import { fetchDataFromTavily } from "@/scripts/tavily";
+import PrePareDataasync from "@/scripts/pinecone-prepare-docs";
+import getResultFromTavily from "./getResults";
 
 export function Chat() {
   const endpoint = "/api/chat";
@@ -50,6 +53,20 @@ export function Chat() {
     updateChatHistory(question, streamingAIContent);
   };
 
+  // const utilityFunction =()=>{
+    
+  //   sendQuestion(input);
+  // }
+
+  const justFunction = async (input: string) => {
+    try {
+      await fetchDataFromTavily(input);
+      sendQuestion(input);
+    } catch (error) {
+      console.error("Error occurred while fetching data from Tavily:", error);
+    }
+  };
+
   // send message to API /api/chat endpoint
   const sendQuestion = async (question: string) => {
     setIsLoading(true);
@@ -57,7 +74,7 @@ export function Chat() {
 
     try {
       const response = await fetch(endpoint, {
-        method: "POST",
+        method: "POST", 
         headers: {
           "Content-Type": "application/json",
         },
@@ -105,7 +122,7 @@ export function Chat() {
   }
 
   return (
-    <div className="">
+    <div className="h-full flex flex-col justify-around w-full">
       <div className="p-6 overflow-auto" ref={containerRef}>
         {messages.map(({ content, role, sources }, index) => (
           <ChatLine
@@ -122,13 +139,15 @@ export function Chat() {
         )}
       </div>
 
-      <InputMessage
-        input={input}
-        setInput={setInput}
-        sendMessage={sendQuestion}
-        placeholder={placeholder}
-        isLoading={isLoading}
-      />
+      <div className="">
+        <InputMessage
+          input={input}
+          setInput={setInput}
+          sendMessage={justFunction}
+          placeholder={placeholder}
+          isLoading={isLoading}
+        />
+      </div>
     </div>
   );
 }

@@ -34,10 +34,8 @@ export const formatChatHistory = (chatHistory: [string, string][]) => {
 };
 
 export function sanitizeAndFormatText(inputText: string) {
-  // Replace newline characters and hyphens with spaces
   let formattedText = inputText.replace(/[\n-]/g, " ");
 
-  // Remove consecutive spaces
   formattedText = formattedText.replace(/\s+/g, " ");
 
   return formattedText;
@@ -48,6 +46,6 @@ export const initialMessage: ChatGPTMessage[] = [
   {
     role: "assistant",
     content:
-      "Hi! I am your News assistant. Please add your news as a pdf and run `npm run prepare:data`. Once done you can ask any question about it !! ",
+      "Hi! I am your News assistant. Ask some questions and I will try to answer them.",
   },
 ];

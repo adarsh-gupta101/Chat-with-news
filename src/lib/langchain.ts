@@ -19,7 +19,9 @@ If the question is not related to the context, politely respond that you are tun
 {context}
 
 Question: {question}
-Helpful answer in markdown:`;
+Helpful answer in markdown:
+Format the answer for a better readability
+`;
 
 function makeChain(
   vectorstore: PineconeStore,
@@ -43,7 +45,7 @@ function makeChain(
           await writer.write(encoder.encode(`${token}`));
         },
         async handleLLMEnd() {
-          console.log("LLM end called");
+          // console.log("LLM end called");
         },
       },
     ],
@@ -102,12 +104,12 @@ export async function callChain({
       .then(async (res) => {
         const sourceDocuments = res?.sourceDocuments;
         const firstTwoDocuments = sourceDocuments.slice(0, 2);
-        const pageContents = firstTwoDocuments.map(
+        const pageContents = sourceDocuments.map(
           ({ pageContent }: { pageContent: string }) => pageContent
         );
         const stringifiedPageContents = JSON.stringify(pageContents);
         await writer.ready;
-        await writer.write(encoder.encode("tokens-ended"));
+        // await writer.write(encoder.encode("tokens-ended"));
         // Sending it in the next event-loop
         setTimeout(async () => {
           await writer.ready;

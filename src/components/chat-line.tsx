@@ -18,7 +18,7 @@ import ReactMarkdown from "react-markdown";
 import { sanitizeAndFormatText } from "@/lib/utils";
 
 // util helper to convert new lines to <br /> tags
-const convertNewLines = (text: string) =>
+const newLines = (text: string) =>
   text.split("\n").map((line, i) => (
     <span key={i}>
       {line}
@@ -34,7 +34,7 @@ export function ChatLine({
   if (!content) {
     return null;
   }
-  const formattedMessage = convertNewLines(content);
+  const formattedMessage = newLines(content);
 
   return (
     <div>

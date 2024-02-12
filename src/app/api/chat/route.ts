@@ -18,6 +18,8 @@ export async function POST(req: NextRequest) {
       transformStream,
     });
 
+    // console.log("readableStream", readableStream);
+
     return new Response(await readableStream);
   } catch (error) {
     console.error("Internal server error ", error);
