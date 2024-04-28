@@ -18,7 +18,7 @@ export function InputMessage({
   isLoading,
 }: InputMessageProps) {
   return (
-    <div className=" flex w-full items-center rounded-md bg-slate-200 p-2 dark:bg-slate-900">
+    <div className=" flex w-full items-center rounded-md bg-slate-100 p-2 dark:bg-slate-900">
       <Input
         className="ring-2 ring-white text-black border-0 placeholder:text-black dark:placeholder-white dark:text-white bg-transparent w-full focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-white transition-colors duration-300 ease-in-out"
         type="text"

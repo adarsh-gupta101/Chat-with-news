@@ -5,11 +5,14 @@ import { InputMessage } from "./input-message";
 import { scrollToBottom, initialMessage } from "@/lib/utils";
 import { ChatLine } from "./chat-line";
 import { ChatGPTMessage } from "@/types";
-import { fetchDataFromTavily } from "@/scripts/tavily";
+import { fetchDataFromTavily } from "@/scripts/tavily.js";
 import PrePareDataasync from "@/scripts/pinecone-prepare-docs";
 import getResultFromTavily from "./getResults";
+import { Toggle } from "@/components/ui/toggle"
 
-export function Chat() {
+
+export function Chat({toast}:any) {
+  let GSearch=false;
   const endpoint = "/api/chat";
   const [input, setInput] = useState("");
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -17,6 +20,7 @@ export function Chat() {
   const [chatHistory, setChatHistory] = useState<[string, string][]>([]);
   const [streamingAIContent, setStreamingAIContent] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isFromPDF, setIsFromPDF] = useState(false);
 
   const updateMessages = (message: ChatGPTMessage) => {
     setMessages((previousMessages) => [...previousMessages, message]);
@@ -59,8 +63,14 @@ export function Chat() {
   // }
 
   const justFunction = async (input: string) => {
+    
     try {
-      await fetchDataFromTavily(input);
+      if(GSearch==true && isFromPDF==true){
+      }
+      await fetchDataFromTavily(input).then(response=>{
+        console.log(response)
+      });
+      GSearch=true;
       sendQuestion(input);
     } catch (error) {
       console.error("Error occurred while fetching data from Tavily:", error);
@@ -147,6 +157,9 @@ export function Chat() {
           placeholder={placeholder}
           isLoading={isLoading}
         />
+
+<Toggle onClick={()=>{setIsFromPDF((value:boolean)=>!value); console.log(isFromPDF)}}>Use PDF</Toggle>
+
       </div>
     </div>
   );
