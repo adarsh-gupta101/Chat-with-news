@@ -25,6 +25,8 @@ export async function fetchDataFromTavily(userInput, isFromPDF) {
     console.log({retrievedDocs})
     // console.log(retrievedDocs[0].metadata.source);
     const response = await axios.get(retrievedDocs[0].metadata.source);
+    //webscrappiing
+    
     const $ = cheerio.load(response.data);
     // Extract relevant data from the webpage
     const title = $("title").text().trim();

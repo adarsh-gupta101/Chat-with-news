@@ -38,10 +38,12 @@ export default function Home() {
       </div>
       <div className="flex flex-1 py-4">
         <div className="w-full">
+          {/* new */}
           <Chat />
         </div>
       </div>
 
+{/* pdf */}
       <PdfTextExtractor cb={PrePareDataasync}></PdfTextExtractor>
     </main>
     </AuroraBackground>
