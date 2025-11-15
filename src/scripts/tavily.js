@@ -11,6 +11,7 @@ export async function fetchDataFromTavily(userInput, isFromPDF) {
     const retriever = new TavilySearchAPIRetriever({
       k: 3,
       apiKey: "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",
+      //lol, pushed api key, have revoked :)
       searchDepth: "advanced",
       includeGeneratedAnswer: true,
       // includeRawCo/tent: true,
